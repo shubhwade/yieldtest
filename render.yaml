@@ -38,9 +38,8 @@ services:
           name: yieldlens-backend
           property: url
 
-databases:
+redises:
   # Managed Redis Cache (Standard for Render)
   - name: yieldlens-cache
-    type: redis
     plan: free
     ipAllowList: [] # Only allow internal traffic
