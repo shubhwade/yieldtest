@@ -10,7 +10,7 @@ services:
       - key: PYTHON_VERSION
         value: 3.10.12
       - key: MONGODB_URI
-        value: mongodb+srv://shubhwade3_db_user:dW8zGwv8eiRi58gc@cluster0.oh85und.mongodb.net/yieldlens?retryWrites=true&w=majority
+        sync: false # Set this securely in the Render Dashboard Environment Variables
       - key: REDIS_URL
         fromService:
           type: redis
