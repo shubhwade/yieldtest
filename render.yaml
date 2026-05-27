@@ -1,5 +1,4 @@
 services:
-  # 1. Backend API Service (Flask)
   - type: web
     name: yieldlens-backend
     env: python
@@ -8,9 +7,8 @@ services:
     startCommand: gunicorn -k eventlet -w 1 app:app
     envVars:
       - key: PYTHON_VERSION
-        value: 3.10.12
+        value: "3.10"
       - key: MONGODB_URI
-        sync: false # Set this securely in the Render Dashboard Environment Variables
       - key: REDIS_URL
         fromService:
           type: redis
@@ -18,8 +16,9 @@ services:
           property: connectionString
       - key: JWT_SECRET
         generateValue: true
+      - key: FRED_API_KEY
+      - key: GEMINI_API_KEY
 
-  # 2. Frontend Client Service (Next.js)
   - type: web
     name: yieldlens-frontend
     env: node
@@ -39,7 +38,5 @@ services:
           property: url
 
 redises:
-  # Managed Redis Cache (Standard for Render)
   - name: yieldlens-cache
     plan: free
-    ipAllowList: [] # Only allow internal traffic
