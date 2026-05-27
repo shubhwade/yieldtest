@@ -10,7 +10,7 @@ services:
       - key: PYTHON_VERSION
         value: 3.10.12
       - key: MONGODB_URI
-        sync: false # Set your MongoDB Atlas URI in Render Dashboard
+        value: mongodb+srv://shubhwade3_db_user:dW8zGwv8eiRi58gc@cluster0.oh85und.mongodb.net/yieldlens?retryWrites=true&w=majority
       - key: REDIS_URL
         fromService:
           type: redis
