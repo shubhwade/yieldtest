@@ -1,13 +1,11 @@
 services:
   - type: web
-    name: "yieldlens-backend"
+    name: "yieldlens-api-v1"
     env: python
     rootDir: backend
     buildCommand: "pip install -r requirements.txt"
     startCommand: "gunicorn -k eventlet -w 1 app:app"
     envVars:
-      - key: PYTHON_VERSION
-        value: "3.10"
       - key: MONGODB_URI
       - key: FRED_API_KEY
       - key: GEMINI_API_KEY
@@ -16,11 +14,11 @@ services:
       - key: REDIS_URL
         fromService:
           type: redis
-          name: "yieldlens-cache"
+          name: "yieldlens-redis-v1"
           property: connectionString
 
   - type: web
-    name: "yieldlens-frontend"
+    name: "yieldlens-web-v1"
     env: node
     rootDir: frontend
     buildCommand: "npm install && npm run build"
@@ -29,14 +27,14 @@ services:
       - key: NEXT_PUBLIC_API_URL
         fromService:
           type: web
-          name: "yieldlens-backend"
+          name: "yieldlens-api-v1"
           property: url
       - key: NEXT_PUBLIC_WS_URL
         fromService:
           type: web
-          name: "yieldlens-backend"
+          name: "yieldlens-api-v1"
           property: url
 
 redises:
-  - name: "yieldlens-cache"
+  - name: "yieldlens-redis-v1"
     plan: free
