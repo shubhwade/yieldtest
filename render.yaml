@@ -1,17 +1,16 @@
 services:
-  # Backend API Service
+  # 1. Backend API Service (Flask)
   - type: web
     name: yieldlens-backend
     env: python
+    rootDir: backend
     buildCommand: pip install -r requirements.txt
     startCommand: gunicorn -k eventlet -w 1 app:app
     envVars:
       - key: PYTHON_VERSION
         value: 3.10.12
       - key: MONGODB_URI
-        fromDatabase:
-          name: yieldlens-db
-          property: connectionString
+        sync: false # Set your MongoDB Atlas URI in Render Dashboard
       - key: REDIS_URL
         fromService:
           type: redis
@@ -20,10 +19,11 @@ services:
       - key: JWT_SECRET
         generateValue: true
 
-  # Frontend Client Service
+  # 2. Frontend Client Service (Next.js)
   - type: web
     name: yieldlens-frontend
     env: node
+    rootDir: frontend
     buildCommand: npm install && npm run build
     startCommand: npm run start
     envVars:
@@ -32,14 +32,15 @@ services:
           type: web
           name: yieldlens-backend
           property: url
+      - key: NEXT_PUBLIC_WS_URL
+        fromService:
+          type: web
+          name: yieldlens-backend
+          property: url
 
 databases:
-  # Managed MongoDB
-  - name: yieldlens-db
-    type: mongodb
-    plan: free
-
-  # Managed Redis Cache
+  # Managed Redis Cache (Standard for Render)
   - name: yieldlens-cache
     type: redis
     plan: free
+    ipAllowList: [] # Only allow internal traffic
