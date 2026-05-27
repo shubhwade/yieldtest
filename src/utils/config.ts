@@ -4,11 +4,11 @@
  */
 
 export const CONFIG = {
-  // API
-  API_URL: process.env.NEXT_PUBLIC_API_URL || 'http://localhost:5000',
+  // API (Using relative path for Vercel Serverless)
+  API_URL: process.env.NEXT_PUBLIC_API_URL || '',
   
-  // WebSocket
-  WS_URL: (process.env.NEXT_PUBLIC_API_URL || 'http://localhost:5000').replace('http', 'ws'),
+  // WebSocket (Note: Persistent WebSockets are not supported on Vercel Serverless)
+  WS_URL: '',
   
   // App metadata
   APP_NAME: 'YieldLens',
