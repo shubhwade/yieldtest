@@ -36,9 +36,9 @@ services:
       - MONGODB_URI=mongodb://mongodb:27017/yieldlens
       - MONGODB_DB_NAME=yieldlens
       - REDIS_URL=redis://redis:6379/0
-      - FRED_API_KEY=b91d828046a85e43f8ef8d0d3cf29f29
-      - GEMINI_API_KEY=AIzaSyA_zpO7UX5zt4t3Z6_tyNAmB3ifF6mC1RY
-      - ALPHA_VANTAGE_API_KEY=AE11PZPHI2X5SZ09
+      - FRED_API_KEY=${FRED_API_KEY}
+      - GEMINI_API_KEY=${GEMINI_API_KEY}
+      - ALPHA_VANTAGE_API_KEY=${ALPHA_VANTAGE_API_KEY}
       - FLASK_PORT=5000
       - FLASK_DEBUG=False
     depends_on:

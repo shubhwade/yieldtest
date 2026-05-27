@@ -11,7 +11,7 @@ The fastest and most stable method for deploying YieldLens is through our struct
 ### Steps
 1. **Clone and enter the repository**:
    ```bash
-   git clone https://github.com/yourusername/yieldlens.git
+   git clone https://github.com/shubhwade/yieldtest.git
    cd yieldlens
    ```
 2. **Configure production variables**:

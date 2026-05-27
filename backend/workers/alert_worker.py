@@ -1,12 +1,14 @@
 """
-Alert background worker for monitoring price/yield triggers.
-"""
+"""Alert background worker for monitoring price/yield triggers."""
 
+import logging
 import time
 
 from celery_app import celery_app
 from database.mongo import get_db
 from events.dispatcher import ALERT_TRIGGERED, dispatcher
+
+logger = logging.getLogger("yieldlens.workers.alert")
 
 
 @celery_app.task
@@ -17,7 +19,7 @@ def check_alerts():
     if not active_alerts:
         return True
 
-    print(f"[Worker] Checking {len(active_alerts)} active alerts...")
+    logger.info(f"Checking {len(active_alerts)} active alerts")
     triggered_count = 0
 
     for alert in active_alerts:
@@ -70,9 +72,9 @@ def check_alerts():
                 )
                 triggered_count += 1
         except Exception as e:
-            print(f"[Worker] Error checking alert {alert.get('_id')}: {e}")
+            logger.error(f"Error checking alert {alert.get('_id')}: {e}")
 
     if triggered_count > 0:
-        print(f"[Worker] Triggered {triggered_count} alerts.")
+        logger.info(f"Triggered {triggered_count} alerts")
 
     return True

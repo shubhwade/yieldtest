@@ -1,6 +1,6 @@
 import type { Metadata } from "next";
-import "./globals.css";
-import AppShell from "@/components/layout/AppShell";
+import "@/styles/globals.css";
+import AppShell from "@/layouts/AppShell";
 
 export const metadata: Metadata = {
   title: "YieldLens | Bloomberg Terminal for Bond Investors",

@@ -20,7 +20,7 @@ YieldLens comes with an automated startup orchestrator that handles virtual envi
 
 ```bash
 # Clone and enter the repository
-git clone https://github.com/yourusername/yieldlens.git
+git clone https://github.com/shubhwade/yieldtest.git
 cd yieldlens
 
 # Run the single startup utility

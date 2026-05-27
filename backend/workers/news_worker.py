@@ -13,10 +13,10 @@ import logging
 from celery_app import celery_app
 from database.cache import cache
 from events.dispatcher import NEWS_BREAKING, NEWS_UPDATED, dispatcher
-from services.ai_service import ai_service
+from ai.service import ai_service
 from services.news_service import news_service
 
-logger = logging.getLogger("YieldLens.NewsWorker")
+logger = logging.getLogger("yieldlens.workers.news")
 
 
 def _run_async(coro):

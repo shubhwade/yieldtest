@@ -1,25 +1,12 @@
 'use client';
 
 import { useState, useEffect } from 'react';
+import dynamic from 'next/dynamic';
 import { motion } from 'framer-motion';
 import { Activity, AlertTriangle, CheckCircle } from 'lucide-react';
-import YieldCurveChart from '@/components/charts/YieldCurveChart';
+import { MOCK_CURVE, MOCK_AUCTIONS } from '@/utils/mocks';
 
-const MOCK_CURVE = [
-  { maturity: '1M', yield: 5.35 }, { maturity: '3M', yield: 5.30 }, { maturity: '6M', yield: 5.22 },
-  { maturity: '1Y', yield: 5.00 }, { maturity: '2Y', yield: 4.45 }, { maturity: '3Y', yield: 4.30 },
-  { maturity: '5Y', yield: 4.18 }, { maturity: '7Y', yield: 4.22 }, { maturity: '10Y', yield: 4.25 },
-  { maturity: '20Y', yield: 4.48 }, { maturity: '30Y', yield: 4.52 },
-];
-
-const MOCK_AUCTIONS = [
-  { desc: '4-Week Bill', type: 'Bill', date: '2026-06-02', rate: '5.28%' },
-  { desc: '13-Week Bill', type: 'Bill', date: '2026-06-03', rate: '5.22%' },
-  { desc: '2-Year Note', type: 'Note', date: '2026-06-05', rate: '4.45%' },
-  { desc: '5-Year Note', type: 'Note', date: '2026-06-08', rate: '4.18%' },
-  { desc: '10-Year Note', type: 'Note', date: '2026-06-10', rate: '4.25%' },
-  { desc: '30-Year Bond', type: 'Bond', date: '2026-06-15', rate: '4.52%' },
-];
+const YieldCurveChart = dynamic(() => import('@/charts/YieldCurveChart'), { ssr: false });
 
 export default function TreasuryPage() {
   const [curve, setCurve] = useState(MOCK_CURVE);

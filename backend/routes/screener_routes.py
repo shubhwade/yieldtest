@@ -5,7 +5,7 @@ import re
 from analytics.bond_math import BondCalculator
 from database.mongo import get_db
 from flask import Blueprint, jsonify, request
-from services.ai_service import ai_service
+from ai.service import ai_service
 
 screener_bp = Blueprint("screener", __name__, url_prefix="/api/v1/screener")
 calc = BondCalculator()

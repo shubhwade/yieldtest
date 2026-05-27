@@ -1,45 +1,16 @@
 'use client';
 
 import { useState, useEffect } from 'react';
+import dynamic from 'next/dynamic';
 import { motion } from 'framer-motion';
-import MetricCard from '@/components/cards/MetricCard';
-import YieldCurveChart from '@/components/charts/YieldCurveChart';
-import SpreadChart from '@/components/charts/SpreadChart';
+import MetricCard from '@/components/MetricCard';
+
+const YieldCurveChart = dynamic(() => import('@/charts/YieldCurveChart'), { ssr: false });
+const SpreadChart = dynamic(() => import('@/charts/SpreadChart'), { ssr: false });
+
 import { TrendingUp, TrendingDown, Activity, BarChart3, Brain, Eye, Bell, Zap, Clock } from 'lucide-react';
 import { io } from 'socket.io-client';
-
-// Fallback mock data
-const MOCK_METRICS = [
-  { label: '10Y Treasury', value: 4.250, change: -0.030, unit: '%' },
-  { label: '2Y Treasury', value: 4.450, change: 0.050, unit: '%' },
-  { label: 'Fed Funds Rate', value: 5.330, change: 0, unit: '%' },
-  { label: 'SOFR', value: 5.310, change: -0.010, unit: '%' },
-  { label: 'CPI YoY', value: 3.200, change: -0.100, unit: '%' },
-];
-
-const MOCK_CURVE = [
-  { maturity: '1M', yield: 5.35 }, { maturity: '3M', yield: 5.30 }, { maturity: '6M', yield: 5.22 },
-  { maturity: '1Y', yield: 5.00 }, { maturity: '2Y', yield: 4.45 }, { maturity: '3Y', yield: 4.30 },
-  { maturity: '5Y', yield: 4.18 }, { maturity: '7Y', yield: 4.22 }, { maturity: '10Y', yield: 4.25 },
-  { maturity: '20Y', yield: 4.48 }, { maturity: '30Y', yield: 4.52 },
-];
-
-const MOCK_SPREADS = [
-  { name: 'IG Spread', value: 98, change: -2 },
-  { name: 'HY Spread', value: 358, change: 5 },
-  { name: '10Y-2Y', value: -0.20, change: -0.05 },
-  { name: '10Y-3M', value: -1.05, change: 0.02 },
-];
-
-const MOCK_RATES = [
-  { name: '10Y Treasury', current: 4.250, d1: -0.030, w1: -0.080, m1: 0.120 },
-  { name: '2Y Treasury', current: 4.450, d1: 0.050, w1: 0.020, m1: -0.150 },
-  { name: '30Y Treasury', current: 4.520, d1: -0.020, w1: -0.050, m1: 0.100 },
-  { name: '5Y Treasury', current: 4.180, d1: 0.010, w1: -0.030, m1: 0.050 },
-  { name: 'Fed Funds', current: 5.330, d1: 0, w1: 0, m1: 0 },
-  { name: 'SOFR', current: 5.310, d1: -0.010, w1: -0.010, m1: -0.020 },
-  { name: '30Y Mortgage', current: 6.890, d1: -0.020, w1: -0.050, m1: -0.120 },
-];
+import { MOCK_METRICS, MOCK_CURVE, MOCK_SPREADS, MOCK_RATES } from '@/utils/mocks';
 
 const MOCK_HEATMAP = [
   { name: 'Government', yield: 4.35, change: -0.02, color: 'bg-secondary' },

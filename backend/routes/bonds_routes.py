@@ -3,36 +3,17 @@
 import time
 
 from analytics.bond_math import BondCalculator
-from database.mongo import get_db
+from database.repository import BaseRepository
 from flask import Blueprint, jsonify, request
-
-
-def _to_oid(id_str):
-    """Convert string to ObjectId if valid, otherwise return as-is."""
-    try:
-        from bson import ObjectId
-
-        return ObjectId(id_str)
-    except Exception:
-        return id_str
-
-
-def _find_by_id(collection, id_str):
-    """Find a document by _id, trying both string and ObjectId formats."""
-    doc = collection.find_one({"_id": id_str})
-    if doc is None:
-        doc = collection.find_one({"_id": _to_oid(id_str)})
-    return doc
-
 
 bonds_bp = Blueprint("bonds", __name__, url_prefix="/api/v1/bonds")
 calc = BondCalculator()
+repo = BaseRepository("bonds")
 
 
 @bonds_bp.route("/", methods=["GET"])
 def list_bonds():
     try:
-        db = get_db()
         page = request.args.get("page", 1, type=int)
         limit = request.args.get("limit", 50, type=int)
         bond_type = request.args.get("type")
@@ -40,10 +21,13 @@ def list_bonds():
         query = {}
         if bond_type:
             query["type"] = bond_type
-        total = db["bonds"].count_documents(query)
-        bonds = list(db["bonds"].find(query).skip(skip).limit(limit))
+            
+        total = repo.count(query)
+        bonds = repo.find(query, limit=limit, skip=skip)
+        
         for b in bonds:
             b["_id"] = str(b["_id"])
+            
         return jsonify(
             {
                 "success": True,
@@ -63,17 +47,19 @@ def list_bonds():
 @bonds_bp.route("/<bond_id>", methods=["GET"])
 def get_bond(bond_id):
     try:
-        db = get_db()
-        bond = _find_by_id(db["bonds"], bond_id)
+        bond = repo.find_by_id(bond_id)
         if not bond:
             return jsonify({"success": False, "error": "Bond not found"}), 404
+            
         bond["_id"] = str(bond["_id"])
+        
         # Calculate analytics on-the-fly
         try:
             analytics = calc.calculate_full_bond_analytics(bond)
             bond["analytics"] = analytics
         except Exception:
             bond["analytics"] = {}
+            
         return jsonify({"success": True, "data": bond})
     except Exception as e:
         return jsonify({"success": False, "error": str(e)}), 500
@@ -82,8 +68,7 @@ def get_bond(bond_id):
 @bonds_bp.route("/types", methods=["GET"])
 def bond_types():
     try:
-        db = get_db()
-        types = db["bonds"].distinct("type")
+        types = repo.collection.distinct("type")
         return jsonify({"success": True, "data": types})
     except Exception as e:
         return jsonify({"success": False, "error": str(e)}), 500
@@ -92,8 +77,7 @@ def bond_types():
 @bonds_bp.route("/sectors", methods=["GET"])
 def bond_sectors():
     try:
-        db = get_db()
-        sectors = db["bonds"].distinct("sector")
+        sectors = repo.collection.distinct("sector")
         return jsonify({"success": True, "data": sectors})
     except Exception as e:
         return jsonify({"success": False, "error": str(e)}), 500

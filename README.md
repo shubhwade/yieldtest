@@ -15,7 +15,7 @@ YieldLens features a fully automated, terminal-first startup experience. A singl
 
 ```bash
 # Clone the repository
-git clone https://github.com/yourusername/yieldlens.git
+git clone https://github.com/shubhwade/yieldtest.git
 cd yieldlens
 
 # Run the single startup orchestrator
@@ -53,32 +53,14 @@ To stop and remove all container volumes, simply run: `docker compose down -v`
 
 ---
 
-## 🏗️ Architecture
+## 🏗️ Architecture & Documentation
 
-```
-┌────────────────────────┐     ┌────────────────────────┐
-│  Next.js 14 Frontend   │────▶│   Flask Backend API    │
-│  (http://localhost:3000)│◀────│  (http://localhost:5000)│
-│                        │     │                        │
-│  • React + TypeScript  │     │  • Quant Math Engine   │
-│  • Tailwind CSS        │     │  • FRED Integration    │
-│  • Recharts            │     │  • AI Failover (Gemini)│
-│  • Framer Motion       │     │  • Backtest Engine     │
-└────────────────────────┘     └──────────┬─────────────┘
-                                          │
-                               ┌──────────▼─────────────┐
-                               │  MongoDB / Redis Cache │
-                               │  • Portfolios & Users  │
-                               │  • Yield Curve Cache   │
-                               └────────────────────────┘
-                                          │
-                               ┌──────────▼─────────────┐
-                               │  External APIs (Free)  │
-                               │  • FRED (yields/rates) │
-                               │  • Google Gemini AI    │
-                               │  • Alpha Vantage       │
-                               └────────────────────────┘
-```
+YieldLens is built with a decoupled, modular architecture designed for high-performance financial analytics.
+
+- **[Architecture Deep Dive](docs/ARCHITECTURE.md)**: Detailed breakdown of the system design and folder structure.
+- **[Installation Guide](docs/INSTALL.md)**: Step-by-step setup for local development.
+- **[Deployment Guide](docs/DEPLOYMENT.md)**: Production deployment instructions for Vercel, Railway, and Docker.
+- **[Contributing](CONTRIBUTING.md)**: How to get involved and coding standards.
 
 ---
 

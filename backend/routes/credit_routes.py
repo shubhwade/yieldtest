@@ -6,7 +6,7 @@ scenario simulations, and dynamic Bloomberg-style AI Credit Memo outputs.
 
 from database.mongo import get_db
 from flask import Blueprint, jsonify
-from services.ai_service import ai_service
+from ai.service import ai_service
 from services.credit_service import CreditIntelligenceService
 from services.fred_service import fred_service
 

@@ -4,7 +4,7 @@ import asyncio
 import logging
 
 from flask import Blueprint, jsonify, request
-from services.ai_service import ai_service
+from ai.service import ai_service
 from services.fred_service import fred_service
 from services.news_service import news_service
 

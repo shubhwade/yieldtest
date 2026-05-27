@@ -29,7 +29,7 @@ class TreasuryService:
             resp.raise_for_status()
             return resp.json()
         except Exception as e:
-            print(f"[TREASURY] Error fetching {endpoint}: {e}")
+            logger.error(f"[TREASURY] Error fetching {endpoint}: {e}")
             return {"error": str(e)}
 
     def get_average_rates(self) -> list:

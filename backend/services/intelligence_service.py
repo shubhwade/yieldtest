@@ -17,7 +17,7 @@ from events.dispatcher import (
     TREASURY_UPDATED,
     dispatcher,
 )
-from services.ai_service import ai_service
+from ai.service import ai_service
 
 logger = logging.getLogger("YieldLens.Intelligence")
 

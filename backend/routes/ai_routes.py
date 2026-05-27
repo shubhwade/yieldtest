@@ -4,7 +4,7 @@ import logging
 
 from database.mongo import get_db
 from flask import Blueprint, jsonify, request
-from services.ai_service import ai_service
+from ai.service import ai_service
 from services.fred_service import fred_service
 
 logger = logging.getLogger("YieldLens.AIRoutes")

@@ -1,11 +1,14 @@
 """
-Treasury background worker for yield curve updates.
-"""
+"""Treasury background worker for yield curve updates."""
+
+import logging
 
 from celery_app import celery_app
 from events.dispatcher import dispatcher
 from services.fred_service import fred_service
 from services.treasury_service import treasury_service
+
+logger = logging.getLogger("yieldlens.workers.treasury")
 
 
 @celery_app.task
@@ -18,6 +21,6 @@ def refresh_treasury_data():
 
     if curve:
         dispatcher.emit("TREASURY_UPDATED", {"curve": curve, "auctions": auctions})
-        print(f"[Worker] Refreshed Treasury Yield Curve")
+        logger.info("Treasury yield curve updated successfully")
 
     return True

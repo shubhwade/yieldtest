@@ -9,6 +9,23 @@ from flask import Response, jsonify
 from utils.constants import RATING_SCORES
 
 
+def to_object_id(id_str: str):
+    """
+    Convert a string to a MongoDB ObjectId if possible.
+    
+    Args:
+        id_str: The string to convert.
+        
+    Returns:
+        An ObjectId or the original string if conversion fails.
+    """
+    try:
+        from bson import ObjectId
+        return ObjectId(id_str)
+    except Exception:
+        return id_str
+
+
 def json_response(
     data: dict | list | str, status: int = 200, success: bool = True
 ) -> tuple[Response, int]:

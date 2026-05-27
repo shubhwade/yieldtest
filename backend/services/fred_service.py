@@ -100,7 +100,7 @@ class FREDService:
                 latency,
                 getattr(e, "response", None) and e.response.status_code or 500,
             )
-            print(f"[FRED] Error fetching {endpoint}: {e}")
+            logger.error(f"[FRED] Error fetching {endpoint}: {e}")
             return {"error": str(e)}
 
     def _generate_mock_series(self, series_id: str, limit: int) -> list:

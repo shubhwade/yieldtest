@@ -63,7 +63,7 @@ def run_backtest():
         )
 
         # Generate AI explanation
-        from services.ai_service import ai_service
+        from ai.service import ai_service
 
         prompt = f"""
         Provide a concise quantitative analysis of this fixed income backtest results.

@@ -1,0 +1,45 @@
+services:
+  # Backend API Service
+  - type: web
+    name: yieldlens-backend
+    env: python
+    buildCommand: pip install -r requirements.txt
+    startCommand: gunicorn -k eventlet -w 1 app:app
+    envVars:
+      - key: PYTHON_VERSION
+        value: 3.10.12
+      - key: MONGODB_URI
+        fromDatabase:
+          name: yieldlens-db
+          property: connectionString
+      - key: REDIS_URL
+        fromService:
+          type: redis
+          name: yieldlens-cache
+          property: connectionString
+      - key: JWT_SECRET
+        generateValue: true
+
+  # Frontend Client Service
+  - type: web
+    name: yieldlens-frontend
+    env: node
+    buildCommand: npm install && npm run build
+    startCommand: npm run start
+    envVars:
+      - key: NEXT_PUBLIC_API_URL
+        fromService:
+          type: web
+          name: yieldlens-backend
+          property: url
+
+databases:
+  # Managed MongoDB
+  - name: yieldlens-db
+    type: mongodb
+    plan: free
+
+  # Managed Redis Cache
+  - name: yieldlens-cache
+    type: redis
+    plan: free

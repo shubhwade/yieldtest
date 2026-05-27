@@ -1,11 +1,14 @@
 """
-Market background worker for dashboard aggregation.
-"""
+"""Market background worker for dashboard aggregation."""
+
+import logging
 
 from celery_app import celery_app
 from database.mongo import get_db
 from events.dispatcher import dispatcher
 from services.market_data_service import market_data_service
+
+logger = logging.getLogger("yieldlens.workers.market")
 
 
 @celery_app.task
@@ -16,6 +19,6 @@ def refresh_dashboard():
 
     if data:
         dispatcher.emit("DASHBOARD_UPDATED", data)
-        print(f"[Worker] Refreshed Global Dashboard")
+        logger.info("Global dashboard updated successfully")
 
     return True

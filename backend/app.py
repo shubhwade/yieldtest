@@ -159,32 +159,9 @@ def create_app() -> Flask:
     socketio.init_app(app)
     init_socket_listeners()
 
-    # Start a robust lightweight fallback background thread if Redis/Celery isn't running or configured
-    import threading
-    import time
-
-    def fallback_scheduler():
-        time.sleep(10)  # initial delay to let server start up
-        logger.info(
-            "Telemetry Scheduler: fallback background thread active and monitoring data freshness."
-        )
-        while True:
-            try:
-                from workers.news_worker import refresh_news
-
-                refresh_news()
-            except Exception as e:
-                pass
-            try:
-                from workers.market_worker import refresh_dashboard
-
-                refresh_dashboard()
-            except Exception as e:
-                pass
-            time.sleep(30)  # Poll/refresh every 30 seconds
-
-    scheduler_thread = threading.Thread(target=fallback_scheduler, daemon=True)
-    scheduler_thread.start()
+    # Start background workers
+    from workers.telemetry_worker import start_fallback_scheduler
+    start_fallback_scheduler()
 
     return app
 
