@@ -1,5 +1,6 @@
 version: 1
 services:
+  # 1. Backend API Service
   - type: web
     name: "yieldlens-api-v1"
     env: python
@@ -18,6 +19,7 @@ services:
           name: "yieldlens-redis-v1"
           property: connectionString
 
+  # 2. Frontend Client Service
   - type: web
     name: "yieldlens-web-v1"
     env: node
@@ -36,6 +38,8 @@ services:
           name: "yieldlens-api-v1"
           property: url
 
-redises:
-  - name: "yieldlens-redis-v1"
+  # 3. Redis Instance (Inside services block for compatibility)
+  - type: redis
+    name: "yieldlens-redis-v1"
     plan: free
+    ipAllowList: []
