@@ -1,0 +1,11 @@
+{
+  "name": "yieldlens-root",
+  "version": "1.0.0",
+  "description": "YieldLens Bloomberg-Grade Fixed-Income Intelligence Platform",
+  "scripts": {
+    "yieldlens": "python run.py",
+    "start": "python run.py"
+  },
+  "author": "YieldLens Team",
+  "license": "MIT"
+}
