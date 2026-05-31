@@ -22,6 +22,7 @@ from routes.search_routes import search_bp
 from routes.telemetry_routes import telemetry_bp
 from routes.backtest_routes import backtest_bp
 from routes.fred_routes import fred_bp
+from routes.credit_routes import credit_bp
 
 app = Flask(__name__)
 CORS(app)
@@ -43,6 +44,7 @@ app.register_blueprint(search_bp)
 app.register_blueprint(telemetry_bp)
 app.register_blueprint(backtest_bp)
 app.register_blueprint(fred_bp)
+app.register_blueprint(credit_bp)
 
 @app.route('/api/health')
 def health_check():

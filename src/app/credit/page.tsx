@@ -189,21 +189,22 @@ export default function CreditPage() {
       </div>
 
       <div className="grid grid-cols-1 lg:grid-cols-4 gap-4">
-        {/* Left Side: Issuer Selector */}
-        <div className="panel flex flex-col h-[75vh]">
+        {/* Left Side: Issuer Selector - Collapsible or Hidden on small screens if needed, but here we'll just make it responsive */}
+        <div className="panel flex flex-col h-auto lg:h-[75vh]">
           <div className="panel-header flex items-center gap-2">
             <Search className="w-4 h-4 text-accent" />
             <span className="text-sm font-semibold">Issuer Search</span>
           </div>
           <div className="p-3 border-b border-border/60">
             <input
+              type="text"
               className="input-field w-full text-xs"
               placeholder="Search corporate ticker..."
               value={searchQuery}
               onChange={(e) => setSearchQuery(e.target.value)}
             />
           </div>
-          <div className="flex-1 overflow-y-auto p-2 space-y-1">
+          <div className="flex-1 overflow-y-auto p-2 space-y-1 max-h-[300px] lg:max-h-none">
             {issuers
               .filter((i) =>
                 i.name.toLowerCase().includes(searchQuery.toLowerCase()) ||
@@ -236,7 +237,7 @@ export default function CreditPage() {
           {/* Header Summary Panel */}
           <div className="panel bg-[#0B0B0B] p-4 flex flex-col md:flex-row md:items-center justify-between gap-4 border-l-4 border-accent">
             <div>
-              <div className="flex items-center gap-3">
+              <div className="flex flex-wrap items-center gap-3">
                 <span className="text-lg font-black text-text">{p.name}</span>
                 <span className="bg-accent/10 border border-accent/20 px-2 py-0.5 rounded text-[10px] font-mono text-accent font-bold">
                   {p.ticker}
@@ -251,8 +252,8 @@ export default function CreditPage() {
             </div>
 
             {/* Quick Badges */}
-            <div className="flex items-center gap-2 shrink-0">
-              <div className="bg-bg-panel border border-border rounded px-3 py-1 text-center">
+            <div className="flex flex-wrap items-center gap-2 shrink-0">
+              <div className="bg-bg-panel border border-border rounded px-3 py-1 text-center min-w-[80px]">
                 <div className="text-[9px] text-text-tertiary uppercase">S&amp;P / Moody&apos;s</div>
                 <div className="font-mono text-xs font-bold mt-0.5 text-text flex items-center gap-1.5 justify-center">
                   <span className="text-positive">{ra.sp}</span>
@@ -260,11 +261,11 @@ export default function CreditPage() {
                   <span className="text-accent">{ra.moodys}</span>
                 </div>
               </div>
-              <div className={`border rounded px-3 py-1 text-center ${getOutlookColor(ra.outlook)}`}>
+              <div className={`border rounded px-3 py-1 text-center min-w-[80px] ${getOutlookColor(ra.outlook)}`}>
                 <div className="text-[9px] uppercase opacity-75">Outlook</div>
                 <div className="font-mono text-xs font-bold mt-0.5 uppercase">{ra.outlook}</div>
               </div>
-              <div className="bg-bg-panel border border-border rounded px-3 py-1 text-center">
+              <div className="bg-bg-panel border border-border rounded px-3 py-1 text-center min-w-[80px]">
                 <div className="text-[9px] text-text-tertiary uppercase">Risk Grade</div>
                 <div className="font-mono text-xs font-bold mt-0.5 text-accent flex items-center justify-center uppercase font-mono">
                   {r.risk_grade}
@@ -274,7 +275,7 @@ export default function CreditPage() {
           </div>
 
           {/* Navigation Tabs */}
-          <div className="flex border-b border-border/80 gap-1 overflow-x-auto scrollbar-hide">
+          <div className="flex border-b border-border/80 gap-1 overflow-x-auto scrollbar-hide sticky top-0 bg-bg-panel/80 backdrop-blur-md z-10 px-1">
             {[
               { id: 'overview', label: 'Issuer Profile', icon: Building2 },
               { id: 'solvency', label: 'Solvency & Risk', icon: Shield },
