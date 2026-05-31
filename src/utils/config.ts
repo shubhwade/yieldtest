@@ -5,7 +5,7 @@
 
 export const CONFIG = {
   // API (Using relative path for Vercel Serverless)
-  API_URL: process.env.NEXT_PUBLIC_API_URL || '',
+  API_URL: process.env.NEXT_PUBLIC_API_URL || 'http://localhost:5000',
   
   // WebSocket (Note: Persistent WebSockets are not supported on Vercel Serverless)
   WS_URL: '',

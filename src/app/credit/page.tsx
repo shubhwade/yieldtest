@@ -27,7 +27,7 @@ export default function CreditPage() {
   const [memoLoading, setMemoLoading] = useState(false);
   const [loading, setLoading] = useState(true);
 
-  const API_URL = process.env.NEXT_PUBLIC_API_URL || '';
+  const API_URL = process.env.NEXT_PUBLIC_API_URL || 'http://localhost:5000';
 
   // Fetch Available Issuers
   useEffect(() => {

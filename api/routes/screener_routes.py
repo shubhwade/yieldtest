@@ -1,6 +1,7 @@
 """Screener routes — advanced bond search and filters."""
 
 import re
+import time
 
 from analytics.bond_math import BondCalculator
 from database.mongo import get_db
@@ -10,11 +11,88 @@ from ai.service import ai_service
 screener_bp = Blueprint("screener", __name__, url_prefix="/api/v1/screener")
 calc = BondCalculator()
 
+DEFAULT_BOND_MARKET = [
+    {
+        "issuer": "U.S. Treasury",
+        "ticker": "UST",
+        "cusip": "9128285Q9",
+        "type": "treasury",
+        "coupon_rate": 4.50,
+        "maturity_date": "2030-11-15T00:00:00Z",
+        "price": 102.10,
+        "face_value": 1000,
+        "rating": "AAA",
+        "sector": "Government",
+        "frequency": 2,
+        "callable": False,
+        "tax_exempt": False,
+        "created_at": time.strftime("%Y-%m-%dT%H:%M:%SZ", time.gmtime()),
+    },
+    {
+        "issuer": "Apple Inc.",
+        "ticker": "AAPL",
+        "cusip": "037833100",
+        "type": "corporate",
+        "coupon_rate": 3.95,
+        "maturity_date": "2032-05-01T00:00:00Z",
+        "price": 101.25,
+        "face_value": 1000,
+        "rating": "AA+",
+        "sector": "Technology",
+        "frequency": 2,
+        "callable": False,
+        "tax_exempt": False,
+        "created_at": time.strftime("%Y-%m-%dT%H:%M:%SZ", time.gmtime()),
+    },
+    {
+        "issuer": "JPMorgan Chase & Co.",
+        "ticker": "JPM",
+        "cusip": "46625H100",
+        "type": "corporate",
+        "coupon_rate": 4.25,
+        "maturity_date": "2029-09-15T00:00:00Z",
+        "price": 99.40,
+        "face_value": 1000,
+        "rating": "A+",
+        "sector": "Financials",
+        "frequency": 2,
+        "callable": False,
+        "tax_exempt": False,
+        "created_at": time.strftime("%Y-%m-%dT%H:%M:%SZ", time.gmtime()),
+    },
+    {
+        "issuer": "Toyota Motor Credit",
+        "ticker": "TMCC",
+        "cusip": "89236TEY7",
+        "type": "corporate",
+        "coupon_rate": 5.20,
+        "maturity_date": "2035-04-30T00:00:00Z",
+        "price": 98.75,
+        "face_value": 1000,
+        "rating": "A",
+        "sector": "Industrials",
+        "frequency": 2,
+        "callable": False,
+        "tax_exempt": False,
+        "created_at": time.strftime("%Y-%m-%dT%H:%M:%SZ", time.gmtime()),
+    },
+]
+
+
+def _seed_default_bonds(db):
+    existing = db["bonds"].count_documents({})
+    if existing == 0:
+        inserted = db["bonds"].insert_many(DEFAULT_BOND_MARKET)
+        # Ensure any index or conversion logic is preserved
+        return list(db["bonds"].find({"_id": {"$in": inserted.inserted_ids}}))
+    return []
+
 
 @screener_bp.route("/search", methods=["POST"])
 def search():
     try:
         db = get_db()
+        _seed_default_bonds(db)
         data = request.get_json() or {}
         query = {}
 
