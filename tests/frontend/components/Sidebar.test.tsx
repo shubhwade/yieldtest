@@ -1,6 +1,6 @@
 import React from 'react';
 import { render, screen, fireEvent } from '@testing-library/react';
-import Sidebar from '@/components/layout/Sidebar';
+import Sidebar from '@/layouts/Sidebar';
 import { usePathname } from 'next/navigation';
 
 // Mock next/navigation

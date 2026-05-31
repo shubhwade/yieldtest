@@ -1,4 +1,4 @@
-import { useEffect, useState, useRef } from 'react';
+import { useEffect, useState, useRef, useCallback } from 'react';
 import { Search, User, Activity, Database, Cpu, AlertTriangle, ShieldCheck, Clock, RefreshCw } from 'lucide-react';
 
 const tickerItems = [
@@ -35,7 +35,7 @@ export default function TopBar() {
   }, []);
 
   // Fetch Telemetry Data
-  const fetchTelemetry = async () => {
+  const fetchTelemetry = useCallback(async () => {
     setLoading(true);
     try {
       const hRes = await fetch(`${API_URL}/api/v1/telemetry/health`);
@@ -60,7 +60,7 @@ export default function TopBar() {
     } finally {
       setLoading(false);
     }
-  };
+  }, [API_URL]);
 
   useEffect(() => {
     if (showTelemetry) {
@@ -68,7 +68,7 @@ export default function TopBar() {
       const interval = setInterval(fetchTelemetry, 8000);
       return () => clearInterval(interval);
     }
-  }, [showTelemetry]);
+  }, [showTelemetry, fetchTelemetry]);
 
   // Click outside to close telemetry popover
   useEffect(() => {

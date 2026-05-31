@@ -3,7 +3,7 @@
 import { useState } from 'react';
 import { motion } from 'framer-motion';
 import { TrendingUp, BarChart3 } from 'lucide-react';
-import MetricCard from '@/components/cards/MetricCard';
+import MetricCard from '@/components/MetricCard';
 
 const SECTORS = [
   { name: 'Government', avgYield: 4.35, spread: 0, change: -0.02, volume: '$45.2B', color: 'border-secondary/50' },

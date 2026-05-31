@@ -93,9 +93,11 @@ export async function fetchAPI<T = unknown>(
   endpoint: string,
   options: RequestInit = {}
 ): Promise<T> {
-  const headers: HeadersInit = {
+  const headers: Record<string, string> = {
     'Content-Type': 'application/json',
-    ...options.headers,
+    ...(typeof options.headers === 'object' && options.headers !== null 
+      ? Object.fromEntries(Object.entries(options.headers)) 
+      : {}),
   };
 
   // Add auth token if available

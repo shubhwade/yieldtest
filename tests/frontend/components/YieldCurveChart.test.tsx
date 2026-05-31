@@ -6,7 +6,7 @@
 import React from 'react';
 import { render, screen, fireEvent, waitFor } from '@testing-library/react';
 import '@testing-library/jest-dom';
-import { YieldCurveChart } from '@/components/charts/YieldCurveChart';
+import YieldCurveChart from '@/charts/YieldCurveChart';
 
 // Mock Recharts components
 jest.mock('recharts', () => ({

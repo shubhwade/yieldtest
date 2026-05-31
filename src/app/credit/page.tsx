@@ -160,7 +160,7 @@ export default function CreditPage() {
         </div>
         <div className="flex items-center gap-1.5 text-xs text-text-tertiary bg-bg-panel border border-border px-3 py-1 rounded font-mono">
           <Shield className="w-4 h-4 text-accent" />
-          <span>VERIFIED BY MOODY'S & S&P</span>
+          <span>VERIFIED BY MOODY&apos;S &amp; S&amp;P</span>
         </div>
       </div>
 
@@ -229,7 +229,7 @@ export default function CreditPage() {
             {/* Quick Badges */}
             <div className="flex items-center gap-2 shrink-0">
               <div className="bg-bg-panel border border-border rounded px-3 py-1 text-center">
-                <div className="text-[9px] text-text-tertiary uppercase">S&P / Moody's</div>
+                <div className="text-[9px] text-text-tertiary uppercase">S&amp;P / Moody&apos;s</div>
                 <div className="font-mono text-xs font-bold mt-0.5 text-text flex items-center gap-1.5 justify-center">
                   <span className="text-positive">{ra.sp}</span>
                   <span className="text-text-tertiary">/</span>
@@ -431,7 +431,7 @@ export default function CreditPage() {
                     <div className="panel p-4 space-y-3">
                       <h3 className="text-xs font-bold text-accent uppercase tracking-wider">Ratings Agency Alignment</h3>
                       <p className="text-xs text-text-secondary leading-relaxed font-mono">
-                        Moody's, Standard & Poor's, and Fitch maintain high alignment on {p.name}'s creditworthiness. Historically, {p.ticker} has displayed absolute capital structure stability.
+                        Moody&apos;s, Standard &amp; Poor&apos;s, and Fitch maintain high alignment on {p.name}&apos;s creditworthiness. Historically, {p.ticker} has displayed absolute capital structure stability.
                       </p>
                       <table className="w-full text-xs font-mono mt-4">
                         <thead>
@@ -450,7 +450,7 @@ export default function CreditPage() {
                             <td className="py-2 text-right text-secondary uppercase font-bold">{ra.outlook}</td>
                           </tr>
                           <tr>
-                            <td className="py-2 text-text font-semibold">Moody's Investors Service</td>
+                            <td className="py-2 text-text font-semibold">Moody&apos;s Investors Service</td>
                             <td className="py-2 text-right font-bold text-accent">{ra.moodys}</td>
                             <td className="py-2 text-right text-text-secondary">NONE</td>
                             <td className="py-2 text-right text-secondary uppercase font-bold">{ra.outlook}</td>

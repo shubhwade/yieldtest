@@ -6,7 +6,7 @@
 'use client';
 
 import { useState, useEffect, useCallback } from 'react';
-import { fetchAPI } from './api';
+import { fetchAPI } from '@/services/api';
 
 interface UseFetchState<T> {
   data: T | null;

@@ -3,11 +3,49 @@
 import { ResponsiveContainer, AreaChart, Area, XAxis, YAxis, Tooltip, CartesianGrid } from 'recharts';
 
 interface YieldCurveChartProps {
-  data: { maturity: string; yield: number }[];
+  data: { maturity: string; yield: number; maturity_years?: number }[];
   height?: number;
+  loading?: boolean;
+  error?: string;
+  historicalData?: { maturity: string; yield: number; date: string }[];
+  showComparison?: boolean;
+  showInversion?: boolean;
+  onPointClick?: (point: any) => void;
+  enableZoom?: boolean;
+  referenceYield?: number;
+  referenceLabel?: string;
+  referenceLines?: { yield: number; label: string }[];
 }
 
-export default function YieldCurveChart({ data, height = 300 }: YieldCurveChartProps) {
+export default function YieldCurveChart({
+  data,
+  height = 300,
+  loading,
+  error,
+  historicalData,
+  showComparison,
+  showInversion,
+  onPointClick,
+  enableZoom,
+  referenceYield,
+  referenceLabel,
+  referenceLines
+}: YieldCurveChartProps) {
+  if (loading) {
+    return (
+      <div style={{ height }} className="flex items-center justify-center panel animate-pulse">
+        <span className="text-text-secondary">Loading chart data...</span>
+      </div>
+    );
+  }
+
+  if (error) {
+    return (
+      <div style={{ height }} className="flex items-center justify-center panel border-negative/50 bg-negative/5">
+        <span className="text-negative">Error: {error}</span>
+      </div>
+    );
+  }
   return (
     <ResponsiveContainer width="100%" height={height}>
       <AreaChart data={data} margin={{ top: 10, right: 20, left: 0, bottom: 0 }}>

@@ -6,7 +6,7 @@
 import React from 'react';
 import { render, screen, fireEvent, waitFor } from '@testing-library/react';
 import '@testing-library/jest-dom';
-import { MetricCard } from '@/components/cards/MetricCard';
+import MetricCard from '@/components/MetricCard';
 
 // Mock framer-motion to avoid animation issues in tests
 jest.mock('framer-motion', () => ({
@@ -475,12 +475,12 @@ describe('MetricCard Component', () => {
         value={4.25}
         change={-0.03}
         unit="%"
-        size="large"
+        size="lg"
       />
     );
 
-    const card = screen.getByRole('button');
-    expect(card).toHaveClass('p-6'); // Large padding for large size
+    const card = screen.getByText('10Y Treasury').closest('div');
+    expect(card).toHaveClass('scale-110');
   });
 
   test('applies compact size correctly', () => {
@@ -490,12 +490,12 @@ describe('MetricCard Component', () => {
         value={4.25}
         change={-0.03}
         unit="%"
-        size="compact"
+        size="sm"
       />
     );
 
-    const card = screen.getByRole('button');
-    expect(card).toHaveClass('p-3'); // Compact padding
+    const card = screen.getByText('10Y Treasury').closest('div');
+    expect(card).toHaveClass('scale-90');
   });
 
   // ================================================================

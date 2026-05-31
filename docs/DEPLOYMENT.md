@@ -2,19 +2,24 @@
 
 YieldLens is designed to be deployed in a containerized environment or as separate services on platforms like Vercel and Railway/Render.
 
-## Frontend Deployment (Vercel)
+## Vercel Deployment (Full-Stack Monorepo)
 
-The frontend is optimized for [Vercel](https://vercel.com).
+The project is now optimized as a **Vercel Full-Stack Monorepo**. This means both the Next.js frontend and the Python Flask API are deployed together as a single Vercel project.
 
-1.  **Environment Variables**:
-    - `NEXT_PUBLIC_API_URL`: The URL of your deployed backend API.
-    - `NEXT_PUBLIC_WS_URL`: The URL of your WebSocket server (usually the same as the backend).
-
-2.  **Deployment Steps**:
+1.  **Deployment Steps**:
     - Connect your GitHub repository to Vercel.
-    - Set the root directory to `frontend/`.
-    - Vercel will automatically detect Next.js settings.
-    - Deploy.
+    - Vercel will automatically detect the Next.js framework.
+    - Ensure the **Root Directory** is set to the repository root (not `frontend/` or `api/`).
+    - The `api/` directory will be automatically treated as Vercel Serverless Functions.
+
+2.  **Environment Variables**:
+    - `MONGODB_URI`: Your MongoDB connection string (e.g., from MongoDB Atlas).
+    - `MONGODB_DB_NAME`: Your database name (default: `yieldlens`).
+    - `FRED_API_KEY`: Federal Reserve Economic Data API key.
+    - `GEMINI_API_KEY`: Google Gemini AI API key.
+    - `JWT_SECRET`: A secure string for token signing.
+    - `NEXT_PUBLIC_API_URL`: (Optional) Leave empty to use relative paths in production.
+
 
 ## Backend Deployment (Railway / Render / Docker)
 

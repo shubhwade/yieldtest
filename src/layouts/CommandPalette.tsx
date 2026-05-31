@@ -224,7 +224,7 @@ export default function CommandPalette({ isOpen, onClose }: CommandPaletteProps)
               </div>
             ) : allFlattenedItems.length === 0 ? (
               <div className="p-8 text-center text-text-tertiary text-xs">
-                No matching financial assets or instruments found for "{query}".
+                No matching financial assets or instruments found for &quot;{query}&quot;.
               </div>
             ) : (
               <div className="space-y-3 p-1">
