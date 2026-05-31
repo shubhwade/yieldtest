@@ -34,9 +34,9 @@ export default function AppShell({ children }: { children: React.ReactNode }) {
   }, []);
 
   return (
-    <div className="flex h-screen w-screen overflow-hidden bg-black">
+    <div className="flex h-screen w-screen bg-black">
       <Sidebar collapsed={collapsed} onToggle={() => setCollapsed(!collapsed)} />
-      <div className="flex flex-col flex-1 min-w-0 bg-bg-panel">
+      <div className="flex flex-col flex-1 min-w-0 bg-bg-panel overflow-hidden">
         <TopBar />
         <main className="flex-1 overflow-y-auto overflow-x-hidden p-4 lg:p-6">
           {children}

@@ -47,7 +47,7 @@ export default function DashboardPage() {
   const [alerts, setAlerts] = useState<any[]>([]);
   const [loading, setLoading] = useState(true);
 
-  const API_URL = process.env.NEXT_PUBLIC_API_URL || 'http://localhost:5000';
+  const API_URL = process.env.NEXT_PUBLIC_API_URL || '';
 
   useEffect(() => {
     async function fetchDashboard() {
@@ -78,18 +78,26 @@ export default function DashboardPage() {
           if (d?.movers?.length) setMovers(d.movers);
         }
 
-        // Fetch Watchlist
-        const wRes = await fetch(`${API_URL}/api/v1/watchlist/`);
-        if (wRes.ok) {
-          const wJson = await wRes.json();
-          if (wJson.success) setWatchlist(wJson.data.slice(0, 3));
+        // Fetch Watchlist (handle non-logged in state gracefully)
+        try {
+          const wRes = await fetch(`${API_URL}/api/v1/watchlist/`);
+          if (wRes.ok) {
+            const wJson = await wRes.json();
+            if (wJson.success) setWatchlist(wJson.data.slice(0, 3));
+          }
+        } catch (e) {
+          console.debug("Watchlist not available (likely not logged in)");
         }
 
-        // Fetch Alerts
-        const aRes = await fetch(`${API_URL}/api/v1/alerts/triggered`);
-        if (aRes.ok) {
-          const aJson = await aRes.json();
-          if (aJson.success) setAlerts(aJson.data.slice(0, 3));
+        // Fetch Alerts (handle non-logged in state gracefully)
+        try {
+          const aRes = await fetch(`${API_URL}/api/v1/alerts/triggered`);
+          if (aRes.ok) {
+            const aJson = await aRes.json();
+            if (aJson.success) setAlerts(aJson.data.slice(0, 3));
+          }
+        } catch (e) {
+          console.debug("Alerts not available (likely not logged in)");
         }
 
       } catch (e) {

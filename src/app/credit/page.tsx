@@ -27,7 +27,7 @@ export default function CreditPage() {
   const [memoLoading, setMemoLoading] = useState(false);
   const [loading, setLoading] = useState(true);
 
-  const API_URL = process.env.NEXT_PUBLIC_API_URL || 'http://localhost:5000';
+  const API_URL = process.env.NEXT_PUBLIC_API_URL || '';
 
   // Fetch Available Issuers
   useEffect(() => {
@@ -111,7 +111,31 @@ export default function CreditPage() {
       <div className="flex h-[80vh] items-center justify-center">
         <div className="text-center space-y-3">
           <div className="w-10 h-10 border-4 border-accent border-t-transparent rounded-full animate-spin mx-auto" />
-          <p className="text-xs text-text-tertiary font-mono">RETRIEVING INSTITUTIONAL CREDIT LEDGER...</p>
+          <p className="text-xs text-text-tertiary font-mono uppercase">RETRIEVING INSTITUTIONAL CREDIT LEDGER...</p>
+        </div>
+      </div>
+    );
+  }
+
+  // Fallback to avoid empty screen if data is missing but loading is false
+  if (!data && !loading) {
+    return (
+      <div className="flex h-[80vh] items-center justify-center">
+        <div className="text-center space-y-4 panel p-8 border-dashed border-2 border-border/60 max-w-md">
+          <AlertTriangle className="w-12 h-12 text-warning mx-auto opacity-50" />
+          <div className="space-y-2">
+            <h2 className="text-lg font-bold text-text">No Data Available</h2>
+            <p className="text-sm text-text-secondary leading-relaxed">
+              We couldn&apos;t retrieve the credit profile for <span className="text-accent font-mono">{selectedTicker}</span>. 
+              Please ensure the backend is running and the database is seeded.
+            </p>
+          </div>
+          <button 
+            onClick={() => window.location.reload()}
+            className="btn-primary px-6 py-2 text-xs font-bold uppercase tracking-widest"
+          >
+            Retry Connection
+          </button>
         </div>
       </div>
     );
