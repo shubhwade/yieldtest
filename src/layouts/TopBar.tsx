@@ -1,5 +1,6 @@
 import { useEffect, useState, useRef, useCallback } from 'react';
 import { Search, User, Activity, Database, Cpu, AlertTriangle, ShieldCheck, Clock, RefreshCw } from 'lucide-react';
+import { motion } from 'framer-motion';
 
 const tickerItems = [
   { label: '10Y', value: 4.25, change: -0.03 },
@@ -100,7 +101,18 @@ export default function TopBar() {
     <div className="h-10 bg-bg-panel border-b border-border flex items-center shrink-0 relative z-40">
       {/* Scrolling Ticker */}
       <div className="flex-1 overflow-hidden relative">
-        <div className="flex animate-ticker whitespace-nowrap">
+        <motion.div 
+          className="flex whitespace-nowrap"
+          animate={{ x: ["0%", "-50%"] }}
+          transition={{ 
+            x: {
+              repeat: Infinity,
+              repeatType: "loop",
+              duration: 40,
+              ease: "linear",
+            },
+          }}
+        >
           {[...tickerItems, ...tickerItems].map((item, i) => (
             <div key={i} className="inline-flex items-center gap-1.5 px-4 text-xs">
               <span className="text-text-secondary font-medium">{item.label}</span>
@@ -110,7 +122,7 @@ export default function TopBar() {
               </span>
             </div>
           ))}
-        </div>
+        </motion.div>
       </div>
 
       {/* Right section */}
